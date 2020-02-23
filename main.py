@@ -51,11 +51,16 @@ def measureSmoke():
     return smoke.read()
 
 
-def sendData():
-    import properties
+def sendData(measure):
+    import properties as prop
     from umqtt.simple import MQTTClient
-    server = properties.server()
-    client = MQTTClient("umqtt_client", server)
+    server = prop.server()
+    client = MQTTClient("umqtt_client", server, user=prop.user(), password=prop.password(),
+                        port=prop.port())
+    apiKey = prop.apiKey()
+    client.connect()
+    client.subscribe(topic='smart_home')
+    client.publish(msg=measure[0])
 
 
 def main():
@@ -68,6 +73,7 @@ def main():
         print('temp= ' + str(measures[0]) + ' hum= ' + str(measures[1]) + ' fire = ' + str(
             measures[2]) + ' smoke = ' + str(measures[3]))
         utime.sleep(5)
+        sendData(measures)
 
 
 if __name__ == '__main__':
