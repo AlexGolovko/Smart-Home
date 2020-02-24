@@ -3,6 +3,7 @@ import machine
 from machine import Pin, I2C
 import dht
 import uping
+import cloud
 
 
 def measureDHT11():
@@ -51,29 +52,20 @@ def measureSmoke():
     return smoke.read()
 
 
-def sendData(measure):
-    import properties as prop
-    from umqtt.simple import MQTTClient
-    server = prop.server()
-    client = MQTTClient("umqtt_client", server, user=prop.user(), password=prop.password(),
-                        port=prop.port())
-    apiKey = prop.apiKey()
-    client.connect()
-    client.subscribe(topic='smart_home')
-    client.publish(msg=measure[0])
-
-
 def main():
     import boot
     boot.init()
+    # client = cloud.client()
     while True:
+        names = ['temperature', 'humidity', 'fire', 'smoke']
         measures = measureDHT11()
         measures.append(measureFire())
         measures.append(measureSmoke())
         print('temp= ' + str(measures[0]) + ' hum= ' + str(measures[1]) + ' fire = ' + str(
             measures[2]) + ' smoke = ' + str(measures[3]))
-        utime.sleep(5)
-        sendData(measures)
+        for idx in range(4):
+            cloud.mqtt_publish(names[idx], str(measures[idx]), retain=True)
+        utime.sleep(60)
 
 
 if __name__ == '__main__':

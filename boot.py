@@ -19,6 +19,7 @@ def init():
 
 def do_connect():
     import properties
+    import uping
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
     if not wlan.isconnected():
@@ -27,8 +28,5 @@ def do_connect():
         while not wlan.isconnected():
             pass
     print('network config:', wlan.ifconfig())
-    print(wlan.config('mac'))
-    #print(uping.ping('google.com'))
+    print(uping.ping('google.com'))
 
-if __name__ == '__boot__':
-    init()
