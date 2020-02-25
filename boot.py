@@ -7,13 +7,12 @@
 import network
 import machine
 import esp
+import gc
+from ntptime import settime
 
 machine.freq(240000000)
 esp.osdebug(None)
-import gc
-gc.collect()
-do_connect()
-print('wifi connected')
+
 
 def do_connect():
     import properties
@@ -28,3 +27,8 @@ def do_connect():
     print('network config:', wlan.ifconfig())
     print(uping.ping('google.com'))
 
+
+do_connect()
+settime()
+gc.collect()
+print('wifi connected')
