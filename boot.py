@@ -8,14 +8,12 @@ import network
 import machine
 import esp
 
-
-def init():
-    machine.freq(240000000)
-    esp.osdebug(None)
-    import gc
-    gc.collect()
-    do_connect()
-
+machine.freq(240000000)
+esp.osdebug(None)
+import gc
+gc.collect()
+do_connect()
+print('wifi connected')
 
 def do_connect():
     import properties
