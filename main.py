@@ -5,6 +5,7 @@ import dht
 import uping
 import cloud
 
+client = NONE
 
 def measureDHT11():
     sensor = dht.DHT11(Pin(22))
@@ -42,14 +43,14 @@ def collectData():
     return measureDHT11(), measureFire(), measureSmoke()
 
 def main():
-    # client = cloud.client()
+    client = Cloud()
     while True:
         names = ['temperature', 'humidity', 'fire', 'smoke']
         measures = collectData()      
         print('temp= ' + str(measures[0]) + ' hum= ' + str(measures[1]) + ' fire = ' + str(
             measures[2]) + ' smoke = ' + str(measures[3]))
         for idx in range(4):
-            cloud.mqtt_publish(names[idx], str(measures[idx]), retain=True)
+            client.mqtt_publish(names[idx], str(measures[idx]), retain=True)
         utime.sleep(60)
 
 
