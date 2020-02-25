@@ -53,8 +53,6 @@ def measureSmoke():
 
 
 def main():
-    import boot
-    boot.init()
     # client = cloud.client()
     while True:
         names = ['temperature', 'humidity', 'fire', 'smoke']
