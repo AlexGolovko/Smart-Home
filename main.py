@@ -2,7 +2,6 @@ import utime
 import machine
 from machine import Pin, I2C
 import dht
-import uping
 import cloud
 import gc
 
@@ -22,7 +21,8 @@ def measureDHT11():
 
     temp = sensor.temperature()
     hum = sensor.humidity()
-    return temp, hum
+    data = [temp, hum]
+    return data
 
 
 def relay():
@@ -38,12 +38,18 @@ def measureFire():
 
 
 def measureSmoke():
-    smoke = machine.ADC(Pin(32))
-    return smoke.read()
+    smokeSensor = machine.ADC(Pin(32))
+    smoke = smokeSensor.read()
+    if smoke < 1200:
+        smoke = 0
+    return smoke
 
 
 def collectData():
-    return measureDHT11(), measureFire(), measureSmoke()
+    data = measureDHT11()
+    data.append(measureFire())
+    data.append(measureSmoke())
+    return data
 
 
 def main():
@@ -58,9 +64,14 @@ def main():
         year, month, day, hour, minute, second, ms, dayinyear = utime.localtime()
         client.mqtt_publish(names[4], str(year) + '.' + str(month) + '.' + str(day) + ' ' + str(hour) + ':' + str(
             minute) + ':' + str(second), retain=True)
-        gc.collect
+        gc.collect()
         utime.sleep(60)
 
 
 if __name__ == '__main__':
-    main()
+    while True:
+        try:
+            main()
+        except Exception as err:
+            print(err)
+            machine.reset()
