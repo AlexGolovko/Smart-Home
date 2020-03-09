@@ -8,6 +8,7 @@ class SmarthomeApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }
