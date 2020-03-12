@@ -1,4 +1,4 @@
-package com.golovkobalak.smarthome.repo;
+package com.golovkobalak.smarthome.data;
 
 
 import lombok.Data;

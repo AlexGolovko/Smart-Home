@@ -1,6 +1,6 @@
 package com.golovkobalak.smarthome.model;
 
-import com.golovkobalak.smarthome.repo.Measure;
+import com.golovkobalak.smarthome.data.Measure;
 import com.golovkobalak.smarthome.repo.MeasureRepository;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;

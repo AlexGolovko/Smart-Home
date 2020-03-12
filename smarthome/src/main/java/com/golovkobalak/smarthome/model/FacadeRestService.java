@@ -1,6 +1,6 @@
 package com.golovkobalak.smarthome.model;
 
-import com.golovkobalak.smarthome.repo.Measure;
+import com.golovkobalak.smarthome.data.Measure;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.PropertySource;
