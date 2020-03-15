@@ -1,6 +1,6 @@
 package com.golovkobalak.smarthome.model;
 
-import com.golovkobalak.smarthome.data.Measure;
+import com.golovkobalak.smarthome.repo.Measure;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.PropertySource;
@@ -14,7 +14,7 @@ import java.util.Collections;
 
 
 @Service
-@PropertySource("facade.properties")
+@PropertySource("classpath:facade.properties")
 public class FacadeRestService {
 
     private RestTemplate restTemplate;

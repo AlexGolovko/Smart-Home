@@ -1,10 +1,7 @@
 package com.golovkobalak.smarthome.repo;
 
 
-import com.golovkobalak.smarthome.data.Measure;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-@Repository
-public interface MeasureRepository extends PagingAndSortingRepository<Measure,Long> {
+public interface MeasureRepository extends MongoRepository<Measure, String> {
 }

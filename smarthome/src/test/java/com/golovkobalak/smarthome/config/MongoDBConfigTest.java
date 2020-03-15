@@ -1,7 +1,7 @@
 package com.golovkobalak.smarthome.config;
 
+import com.golovkobalak.smarthome.repo.MongoDBConfig;
 import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoDatabase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +17,5 @@ class MongoDBConfigTest {
     void mongoClient() {
         MongoClient client = mongoDBConfig.mongoClient();
         assertNotNull(client.listDatabaseNames());
-        MongoDatabase database = client.getDatabase(mongoDBConfig.getDatabaseName());
-        assertNotNull(database);
     }
 }
