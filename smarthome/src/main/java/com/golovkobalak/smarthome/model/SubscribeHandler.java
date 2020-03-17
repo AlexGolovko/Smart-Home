@@ -4,6 +4,7 @@ import com.golovkobalak.smarthome.repo.Measure;
 import com.golovkobalak.smarthome.repo.MeasureRepository;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +29,7 @@ public class SubscribeHandler implements Handler {
         executor = Executors.newSingleThreadExecutor();
     }
 
+    @Autowired
     public SubscribeHandler(ApplicationContext context, MeasureRepository repository, FacadeRestService facadeRestService) {
         this.context = context;
         this.repository = repository;
@@ -47,7 +49,7 @@ public class SubscribeHandler implements Handler {
                     e.printStackTrace();
                 }
             });
-            measures=new ConcurrentHashMap<>();
+            measures = new ConcurrentHashMap<>();
         }
         measures.put(topic, message);
     }

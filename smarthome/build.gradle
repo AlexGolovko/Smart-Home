@@ -20,15 +20,15 @@ repositories {
 
 ext {
     set('springCloudVersion', "Hoxton.SR1")
-    set('vaadinVersion', "14.1.17")
 }
 
 dependencies {
     //implementation 'org.springframework.boot:spring-boot-starter-activemq'
     //implementation 'org.springframework.boot:spring-boot-starter-amqp'
-    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+   // implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     //implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'

@@ -1,10 +1,10 @@
 package com.golovkobalak.smarthome.repo;
 
-import org.joda.time.DateTime;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -25,7 +25,7 @@ class MeasureRepositoryTest {
         assertNotNull(repo);
         var map = new ConcurrentHashMap<String, String>();
         map.put("sensors/temperature", "24");
-        map.put("sensors/time", new DateTime().toString());
+        map.put("sensors/time", new Date().toString());
         measure.setMeasures(map);
         repo.save(measure);
         var all = repo.findById(measure.getId());

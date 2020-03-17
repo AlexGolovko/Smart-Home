@@ -25,12 +25,12 @@ public class FacadeRestService {
         this.restTemplate = restTemplateBuilder.build();
     }
 
-    public Measure postMeasure(Measure measure) {
+    public String postMeasure(Measure measure) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept((Collections.singletonList(MediaType.APPLICATION_JSON)));
         HttpEntity<Measure> httpEntity = new HttpEntity<>(measure, headers);
-        return restTemplate.postForObject(url, httpEntity, Measure.class);
+        return String.valueOf(restTemplate.postForLocation(url, httpEntity, Measure.class));
     }
 
 }
