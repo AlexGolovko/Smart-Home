@@ -44,6 +44,10 @@ public class SubscribeHandler implements Handler {
             executor.execute(() -> {
                 try {
                     repository.save(measure);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
                     facadeRestService.postMeasure(measure);
                 } catch (Exception e) {
                     e.printStackTrace();
