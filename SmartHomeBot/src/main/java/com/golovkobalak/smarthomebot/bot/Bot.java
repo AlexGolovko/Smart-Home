@@ -1,5 +1,9 @@
 package com.golovkobalak.smarthomebot.bot;
 
+import com.pengrad.telegrambot.UpdatesListener;
+
 public interface Bot<T> {
-    public void  sendAlarmMessage(T t);
+    void  sendAlarmMessage(T t);
+    void setUpdateHandler(UpdatesListener listener);
+
 }

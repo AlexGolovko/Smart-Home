@@ -35,7 +35,7 @@ class BotTest {
             TelegramBot bot = new TelegramBot(token);
             bot.setUpdatesListener(updates -> {
                 updates.forEach(update -> {
-
+                    System.out.println(update.toString());
                     Long chatId=null;
                     if (update.message() != null) {
                         chatId = update.message().chat().id();

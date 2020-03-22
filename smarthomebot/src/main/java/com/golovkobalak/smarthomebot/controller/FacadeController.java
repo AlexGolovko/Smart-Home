@@ -38,7 +38,6 @@ public class FacadeController {
     @PostMapping(url)
     @ResponseStatus(HttpStatus.CREATED)
     private void postMeasure(@RequestBody Measure measure) {
-        logger.info(String.valueOf(measure));
         executor.execute(() -> alarmService.handle(measure));
     }
 }

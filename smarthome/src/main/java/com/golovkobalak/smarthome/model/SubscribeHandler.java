@@ -5,9 +5,14 @@ import com.golovkobalak.smarthome.repo.MeasureRepository;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.mongo.MongoHealthIndicator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import org.xml.sax.helpers.AttributesImpl;
 
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
@@ -18,6 +23,7 @@ public class SubscribeHandler implements Handler {
     private final ApplicationContext context;
     private final MeasureRepository repository;
     private final FacadeRestService facadeRestService;
+    private LocalDateTime time = LocalDateTime.now();
 
     private Executor executor;
 
@@ -42,11 +48,13 @@ public class SubscribeHandler implements Handler {
             Measure measure = createMeasure();
             measure.setMeasures(measures);
             executor.execute(() -> {
-                try {
-                    repository.save(measure);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                if (LocalDateTime.now().isAfter(time))
+                    try {
+                        repository.save(measure);
+                    } catch (Exception e) {
+                        time = LocalDateTime.now().plusHours(3);
+                        e.printStackTrace();
+                    }
                 try {
                     facadeRestService.postMeasure(measure);
                 } catch (Exception e) {
