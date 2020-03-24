@@ -30,7 +30,7 @@ public class AlarmServiceImpl implements AlarmService {
         boundaries.put("sensors/temperature", 50);
         boundaries.put("sensors/humidity", 70);
         boundaries.put("sensors/fire", 1);
-        boundaries.put("sensors/smoke", 3000);
+        boundaries.put("sensors/smoke", 4000);//we will die
     }
 
     @Autowired
@@ -43,7 +43,7 @@ public class AlarmServiceImpl implements AlarmService {
         measures = new ConcurrentHashMap<>();
         bot.setUpdateHandler(updates -> {
             updates.forEach(update -> {
-                if ("/check".equalsIgnoreCase(update.message().text())) {
+                if (update.message() != null && "/check".equalsIgnoreCase(update.message().text())) {
                     Measure measure = new Measure();
                     measure.setMeasures(measures);
                     bot.sendAlarmMessage(measure);
