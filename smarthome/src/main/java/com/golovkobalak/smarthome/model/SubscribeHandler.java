@@ -52,7 +52,7 @@ public class SubscribeHandler implements Handler {
                     try {
                         repository.save(measure);
                     } catch (Exception e) {
-                        time = LocalDateTime.now().plusHours(3);
+                        time = LocalDateTime.now().plusHours(24);
                         e.printStackTrace();
                     }
                 try {
