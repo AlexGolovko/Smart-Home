@@ -26,6 +26,7 @@ public class AlarmServiceImpl implements AlarmService {
     private Map<String, String> measures;
 
     {
+        measures = new ConcurrentHashMap<>();
         boundaries = new HashMap<>();
         boundaries.put("sensors/temperature", 50);
         boundaries.put("sensors/humidity", 70);
@@ -40,7 +41,6 @@ public class AlarmServiceImpl implements AlarmService {
 
     @PostConstruct
     private void init() {
-        measures = new ConcurrentHashMap<>();
         bot.setUpdateHandler(updates -> {
             updates.forEach(update -> {
                 if ("/check".equalsIgnoreCase(update.message().text())) {

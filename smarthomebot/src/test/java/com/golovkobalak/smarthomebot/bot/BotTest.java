@@ -48,7 +48,6 @@ class BotTest {
             });
             String lock = "lock";
             synchronized (lock) {
-
                 lock.wait();
             }
         } catch (InterruptedException e) {
