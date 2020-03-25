@@ -134,6 +134,5 @@ build/
 .gradle/
 gradle/
 *.md
-mqtt.properties
 
 
