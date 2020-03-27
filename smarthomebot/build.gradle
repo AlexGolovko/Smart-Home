@@ -46,6 +46,9 @@ dependencies {
         exclude group: 'com.vaadin.external.google'
     }
 }
+subprojects{
+    apply from :file("rootProject.projectDir/gradle/heroku/stage.gradle")
+}
 
 dependencyManagement {
     imports {

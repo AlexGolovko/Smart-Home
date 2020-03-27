@@ -49,6 +49,10 @@ test {
     useJUnitPlatform()
 }
 
+subprojects{
+    apply from :file("rootProject.projectDir/gradle/heroku/stage.gradle")
+}
+
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
 
