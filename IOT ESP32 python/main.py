@@ -5,25 +5,20 @@ import dht
 import cloud
 import gc
 
-client = None
-
-
 def measureDHT11():
-    sensor = dht.DHT11(Pin(22))
+    sensor = dht.DHT11(Pin(22, Pin.IN, Pin.PULL_UP))
     while True:
         try:
             sensor.measure()
         except OSError as e:
             print(e)
-            utime.wait(5)
+            utime.sleep(5)
         else:
             break
-
     temp = sensor.temperature()
     hum = sensor.humidity()
     data = [temp, hum]
     return data
-
 
 def relay():
     pin = Pin(0, Pin.OUT)
@@ -31,11 +26,13 @@ def relay():
     utime.sleep(3)
     pin.off()
 
-
 def measureFire():
     fire = machine.ADC(Pin(35))
     return 4095 - fire.read()
 
+def measureFireDigital():
+    fireStarter = machine.Pin(2, machine.Pin.IN, machine.Pin.PULL_UP)
+    return fireStarter.value()
 
 def measureSmoke():
     smokeSensor = machine.ADC(Pin(32))
@@ -44,11 +41,15 @@ def measureSmoke():
         smoke = 0
     return smoke
 
+def measureSmokeDigital():
+    smokeDetector = machine.Pin(32, machine.Pin.IN, machine.Pin.PULL_UP)
+    return 1-smokeDetector.value()
+
 
 def collectData():
     data = measureDHT11()
-    data.append(measureFire())
-    data.append(measureSmoke())
+    data.append(measureFireDigital())
+    data.append(measureSmokeDigital())
     return data
 
 
