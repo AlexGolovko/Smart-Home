@@ -31,7 +31,7 @@ public class FacadeController {
         executor = Executors.newSingleThreadExecutor();
     }
 
-    private final String url = "/facade/measure";
+    private final static String url = "/facade/measure";
 
     private Logger logger = LoggerFactory.getLogger(FacadeController.class);
 
