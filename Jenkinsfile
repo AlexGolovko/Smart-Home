@@ -7,12 +7,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'gradle assemble'
+                sh './gradle assemble'
             }
         }
         stage('Test') {
             steps {
-                sh 'gradle test'
+                sh './gradle test'
             }
         }
         stage('Run docker container'){
