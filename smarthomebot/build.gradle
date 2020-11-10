@@ -31,7 +31,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    //implementation "org.telegram:telegrambots-spring-boot-starter:4.1.2"
+    implementation "org.telegram:telegrambots-spring-boot-starter:4.1.2"
     compile "org.telegram:telegrambots:4.6"
     implementation 'com.github.pengrad:java-telegram-bot-api:4.6.0'
     //compile('com.github.xabgesagtx:telegram-spring-boot-starter:0.21')
