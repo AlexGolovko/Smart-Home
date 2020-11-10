@@ -11,7 +11,5 @@ public class SmarthomeApplication {
         ConfigurableApplicationContext context = SpringApplication.run(SmarthomeApplication.class, args);
         Runner runner = context.getBean(Runner.class);
         runner.run();
-
     }
-
 }
