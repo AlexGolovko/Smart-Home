@@ -1,0 +1,22 @@
+version: "3.3"
+
+networks:
+  default:
+    external:
+      name: mongodb-smarthome
+services:
+  mongo_db:
+    image: library/mongo:latest
+    container_name: "mongo_db"
+    ports:
+      - 27017:27017
+    volumes:
+      - /home/mongo/data:/data/db
+  smarthome:
+    build: .
+    image: golovkobalak/smarthome
+    container_name: "smarthome"
+    ports:
+      - 8081:8080
+    links:
+      - mongo_db
