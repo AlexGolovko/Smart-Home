@@ -34,11 +34,14 @@ public class TelegramBot implements Bot {
             if (response != null) {
                 System.out.println("bad response: " + response.getMessage());
                 response.printStackTrace();
-                // can check that errorCode is 401
-//                bot.removeGetUpdatesListener();
+
             }
             System.out.println("RESPONSE IS NULL");
-//            bot.removeGetUpdatesListener();
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         });
     }
 }

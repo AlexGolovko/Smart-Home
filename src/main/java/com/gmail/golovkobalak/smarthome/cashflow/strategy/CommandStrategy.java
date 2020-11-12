@@ -11,7 +11,7 @@ import java.util.concurrent.Future;
 public class CommandStrategy extends AbstractMessageStrategy {
     private static final List<String> CLEAR_COMMANDS = Arrays.asList("/clear", "/clear@LouieHolovkoBot");
     private static final String ALL_CLEAR = "all clear";
-    private static final String UNSUPPORTED_COMMAND = "Unsupported yet\n"+ "Available commands:\n" +
+    private static final String UNSUPPORTED_COMMAND = "Unsupported yet\n" + "Available commands:\n" +
             "/clear - clean current spending state.\n" +
             "/lastmonth - show all spending for last 31 days.";
     private static final List<String> LAST_MONTH_COMMANDS = Arrays.asList("/lastmonth", "/lastmonth@LouieHolovkoBot");
@@ -32,10 +32,10 @@ public class CommandStrategy extends AbstractMessageStrategy {
             }
             if (CLEAR_COMMANDS.contains(update.message().text().trim())) {
                 final List<CashState> cashStates = cashStateRepo.findAllByChat(optionalChat.get());
-                for (CashState cashState : cashStates) {
+                cashStates.forEach(cashState -> {
                     cashState.setCashState(0L);
                     cashStateRepo.save(cashState);
-                }
+                });
                 return ALL_CLEAR;
             }
             if (LAST_MONTH_COMMANDS.contains(update.message().text().trim())) {
