@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-public abstract class AbstractMessageStrategy implements Strategy {
+public abstract class AbstractMessageStrategy implements MessageStrategy {
     protected static final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public final ChatRepo chatRepo;

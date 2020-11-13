@@ -2,7 +2,7 @@ package com.gmail.golovkobalak.smarthome.cashflow;
 
 import com.gmail.golovkobalak.smarthome.cashflow.strategy.CashMessageStrategy;
 import com.gmail.golovkobalak.smarthome.cashflow.strategy.CommandStrategy;
-import com.gmail.golovkobalak.smarthome.cashflow.strategy.Strategy;
+import com.gmail.golovkobalak.smarthome.cashflow.strategy.MessageStrategy;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import org.springframework.context.annotation.Lazy;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 public class UpdateCashListener implements UpdatesListener {
-    private Strategy strategy;
+    private MessageStrategy strategy;
     private final TelegramBot bot;
     private final CommandStrategy commandStrategy;
     private final CashMessageStrategy cashMessageStrategy;
@@ -37,8 +37,8 @@ public class UpdateCashListener implements UpdatesListener {
                     }
                     final String response = strategy.process(update);
                     bot.sendMessage(chatTelegramId.toString(), response);
-                    System.err.println(System.currentTimeMillis() - startTime);
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
             return CONFIRMED_UPDATES_ALL;
