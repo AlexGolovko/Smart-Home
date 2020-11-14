@@ -7,6 +7,8 @@ pipeline {
         stage('Gradle') {
             steps {
                 sh 'gradle --version'
+                sh 'docker --version'
+                sh 'docker-compose --version'
             }
         }
         stage('Build') {
