@@ -6,6 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface CashFlowRepo extends MongoRepository<CashFlow, String> {
-    List<CashFlow> findAllByChatAndCreateDateGreaterThan(Chat chat, Date date);
 
+    List<CashFlow> findAllByChatAndCreateDateGreaterThan(Chat chat, Date date);
 }
