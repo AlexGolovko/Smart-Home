@@ -31,6 +31,10 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
     implementation 'com.github.pengrad:java-telegram-bot-api:5.0.0'
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5'
+//    compile "org.springframework.integration:spring-integration-mqtt:5.4.1"
+    compileOnly 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
 }
 
 test {
