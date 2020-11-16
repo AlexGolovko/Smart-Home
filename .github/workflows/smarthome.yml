@@ -1,0 +1,11 @@
+name: Continuous Integration
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: gradle-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build with Gradle
+        run: ./gradlew build

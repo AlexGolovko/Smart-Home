@@ -15,8 +15,6 @@ services:
   smarthome:
     build: .
     image: golovkobalak/smarthome
-#    environment:
-#      - JVM_OPTS=-Xmx128m -Xms128m -XX:MaxPermSize=128m
     container_name: "smarthome"
     ports:
       - 8081:8080
