@@ -18,12 +18,6 @@ public class Runner {
 
     public void run() {
         cashFlowBot.run();
-        try {
-            sensorSubscriber.run();
-        } catch (MqttException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sensorSubscriber.run();
     }
 }

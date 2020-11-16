@@ -20,11 +20,18 @@ public class SensorSubscriber {
         this.mqttConfiguration = mqttConfiguration;
     }
 
-    public void run() throws MqttException, InterruptedException {
-        log.info("SensorSubscriber run");
+    public void run() {
+        try {
+            runInternal();
+        } catch (MqttException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void runInternal() throws MqttException, InterruptedException {
         while (!mqttClient.isConnected()) {
             Thread.sleep(TimeUnit.SECONDS.toMillis(10));
-            log.debug("wait startup the broker");
+            log.info("wait startup the broker");
         }
         CountDownLatch receivedSignal = new CountDownLatch(10);
         mqttClient.subscribe(mqttConfiguration.sensorsTopic, (topic, msg) -> {
@@ -32,10 +39,11 @@ public class SensorSubscriber {
             byte[] payload = msg.getPayload();
             // ... payload handling omitted
             final String measure = new String(payload);
-            log.debug("MSG: " + measure);
+            log.info("MSG: " + measure);
             MainController.measures.add(measure);
             receivedSignal.countDown();
         });
         receivedSignal.await(1, TimeUnit.MINUTES);
+        log.info("SensorSubscriber run");
     }
 }
