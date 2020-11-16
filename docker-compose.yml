@@ -15,18 +15,22 @@ services:
   smarthome:
     build: .
     image: golovkobalak/smarthome
+#    environment:
+#      - JVM_OPTS=-Xmx128m -Xms128m -XX:MaxPermSize=128m
     container_name: "smarthome"
     ports:
       - 8081:8080
     links:
       - mongo_db
+    deploy:
+      resources:
+        limits:
+          memory: 128M
   mosquitto:
     image: eclipse-mosquitto
     container_name: "mosquitto"
     ports:
       - 1883:1883
       - 9001:9001
-#    volumes:
-#      - mosquitto.conf:/mosquitto/config/mosquitto.conf
     links:
       - mongo_db
