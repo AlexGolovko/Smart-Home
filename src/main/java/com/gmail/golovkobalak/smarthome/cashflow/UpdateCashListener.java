@@ -13,12 +13,12 @@ import java.util.List;
 @Component
 public class UpdateCashListener implements UpdatesListener {
     private MessageStrategy strategy;
-    private final TelegramBot bot;
+    private final CashBot cashBot;
     private final CommandStrategy commandStrategy;
     private final CashMessageStrategy cashMessageStrategy;
 
-    public UpdateCashListener(@Lazy TelegramBot bot, CommandStrategy commandStrategy, CashMessageStrategy cashMessageStrategy) {
-        this.bot = bot;
+    public UpdateCashListener(@Lazy CashBot cashBot, CommandStrategy commandStrategy, CashMessageStrategy cashMessageStrategy) {
+        this.cashBot = cashBot;
         this.commandStrategy = commandStrategy;
         this.cashMessageStrategy = cashMessageStrategy;
     }
@@ -36,7 +36,7 @@ public class UpdateCashListener implements UpdatesListener {
                         strategy = cashMessageStrategy;
                     }
                     final String response = strategy.process(update);
-                    bot.sendMessage(chatTelegramId.toString(), response);
+                    cashBot.sendMessage(chatTelegramId.toString(), response);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -1,28 +1,18 @@
-package com.gmail.golovkobalak.smarthome.cashflow;
+package com.gmail.golovkobalak.smarthome.telegram.bot;
 
+import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.request.GetChat;
 import com.pengrad.telegrambot.request.SendMessage;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 
 @Slf4j
-@Lazy
-@Component
-@PropertySource("classpath:bot.properties")
-public class TelegramBot implements Bot {
+public class AbstractTelegramBot implements Bot {
+    private final TelegramBot bot;
 
-    private final com.pengrad.telegrambot.TelegramBot bot;
-
-    public TelegramBot(@Value("${bot.token}") String token) {
+    public AbstractTelegramBot(String token) {
         bot = new com.pengrad.telegrambot.TelegramBot(token);
     }
-
 
     @Override
     public void sendMessage(String chatId, String message) {

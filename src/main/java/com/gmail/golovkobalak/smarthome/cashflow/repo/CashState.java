@@ -2,6 +2,7 @@ package com.gmail.golovkobalak.smarthome.cashflow.repo;
 
 
 import com.pengrad.telegrambot.model.Message;
+import lombok.Data;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-@Component
-@Scope("prototype")
+
+@Data
 @Document
 public class CashState {
     @Id
@@ -37,45 +38,5 @@ public class CashState {
 
     public String toMessage() {
         return this.spenderName + " : " + this.cashState;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Chat getChat() {
-        return chat;
-    }
-
-    public void setChat(Chat chat) {
-        this.chat = chat;
-    }
-
-    public Long getSpenderId() {
-        return spenderId;
-    }
-
-    public void setSpenderId(Long spenderId) {
-        this.spenderId = spenderId;
-    }
-
-    public String getSpenderName() {
-        return spenderName;
-    }
-
-    public void setSpenderName(String spenderName) {
-        this.spenderName = spenderName;
-    }
-
-    public Long getCashState() {
-        return cashState;
-    }
-
-    public void setCashState(Long cashState) {
-        this.cashState = cashState;
     }
 }

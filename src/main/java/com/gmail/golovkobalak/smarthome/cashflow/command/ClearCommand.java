@@ -5,7 +5,6 @@ import com.gmail.golovkobalak.smarthome.cashflow.repo.CashStateRepo;
 import com.gmail.golovkobalak.smarthome.cashflow.repo.Chat;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Component("/clear")

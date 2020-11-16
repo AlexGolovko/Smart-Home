@@ -1,11 +1,13 @@
 package com.gmail.golovkobalak.smarthome.cashflow.repo;
 
 import com.pengrad.telegrambot.model.Message;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
+@Data
 @Document
 public class CashFlow {
     @Id
@@ -32,61 +34,5 @@ public class CashFlow {
         }
         cashFlow.createDate = new Date();
         return cashFlow;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public Chat getChat() {
-        return chat;
-    }
-
-    public void setChat(Chat chat) {
-        this.chat = chat;
-    }
-
-    public String getSpenderName() {
-        return spenderName;
-    }
-
-    public void setSpenderName(String spenderName) {
-        this.spenderName = spenderName;
-    }
-
-    public String getSpenderId() {
-        return spenderId;
-    }
-
-    public void setSpenderId(String spenderId) {
-        this.spenderId = spenderId;
-    }
-
-    public int getMoneySum() {
-        return moneySum;
-    }
-
-    public void setMoneySum(int moneySum) {
-        this.moneySum = moneySum;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
     }
 }

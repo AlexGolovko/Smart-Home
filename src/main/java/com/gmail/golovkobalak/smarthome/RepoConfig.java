@@ -1,4 +1,4 @@
-package com.gmail.golovkobalak.smarthome.cashflow.repo;
+package com.gmail.golovkobalak.smarthome;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @ComponentScan
 @PropertySource("classpath:mongo.properties")
 @EnableMongoRepositories
-public class ExpenseRepoConfig extends AbstractMongoClientConfiguration {
+public class RepoConfig extends AbstractMongoClientConfiguration {
 
     @Value("${mongo.url}")
     private String url;

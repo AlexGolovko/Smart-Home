@@ -1,4 +1,4 @@
-package com.gmail.golovkobalak.smarthome.microclimat;
+package com.gmail.golovkobalak.smarthome;
 
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttClient;

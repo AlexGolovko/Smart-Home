@@ -2,7 +2,6 @@ package com.gmail.golovkobalak.smarthome;
 
 import com.gmail.golovkobalak.smarthome.cashflow.Louis;
 import com.gmail.golovkobalak.smarthome.microclimat.SensorSubscriber;
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.springframework.stereotype.Service;
 
 @Service
