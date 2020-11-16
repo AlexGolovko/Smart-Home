@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.3.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
+    id "org.sonarqube" version "3.0"
 //    id 'com.palantir.docker' version '0.25.0'
 //    id 'com.palantir.docker-run' version '0.25.0'
 }
@@ -39,6 +40,14 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "AlexGolovko_Smart-Home"
+        property "sonar.organization", "alexgolovko"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
 }
 
 //String imageName = "golovkobalak/smarthome:$version"
