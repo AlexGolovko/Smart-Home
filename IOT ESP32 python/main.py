@@ -4,6 +4,10 @@ from machine import Pin, I2C
 import dht
 import cloud
 import gc
+import webrepl
+
+CLIENT_ID = "esp32-kitchen"
+
 
 def measureDHT11():
     sensor = dht.DHT11(Pin(22, Pin.IN, Pin.PULL_UP))
@@ -20,19 +24,23 @@ def measureDHT11():
     data = [temp, hum]
     return data
 
+
 def relay():
     pin = Pin(0, Pin.OUT)
     pin.on()
     utime.sleep(3)
     pin.off()
 
+
 def measureFire():
     fire = machine.ADC(Pin(35))
     return 4095 - fire.read()
 
+
 def measureFireDigital():
     fireStarter = machine.Pin(2, machine.Pin.IN, machine.Pin.PULL_UP)
     return fireStarter.value()
+
 
 def measureSmoke():
     smokeSensor = machine.ADC(Pin(32))
@@ -41,9 +49,10 @@ def measureSmoke():
         smoke = 0
     return smoke
 
+
 def measureSmokeDigital():
     smokeDetector = machine.Pin(32, machine.Pin.IN, machine.Pin.PULL_UP)
-    return 1-smokeDetector.value()
+    return 1 - smokeDetector.value()
 
 
 def collectData():
@@ -53,26 +62,39 @@ def collectData():
     return data
 
 
+def collectRequest(data):
+    year, month, day, hour, minute, second, ms, dayinyear = utime.localtime()
+    request = '{"date":"' + str(year) + '.' + str(month) + '.' + str(day) + ' ' + str(hour) + ':' + str(
+        minute) + ':' + str(second) + '",\n"temperatura":"' + str(data[0]) + '",\n"humidity":"' + str(
+        data[1]) + '",\n"fire":"' + str(data[2]) + '",\n"smoke":"' + str(data[3]) + '"}'
+    return request
+
+
+def send(req):
+    from umqtt.simple import MQTTClient
+    mqtt = MQTTClient(CLIENT_ID, '192.168.31.16')
+    mqtt.connect()
+    mqtt.publish('sensors/home/{}'.format(CLIENT_ID).encode(), str(req).encode())
+    mqtt.disconnect()
+
+
 def main():
-    client = cloud.Cloud()
+    # client = cloud.Cloud()
     while True:
-        names = ['temperature', 'humidity', 'fire', 'smoke', 'time']
+        # names = ['temperature', 'humidity', 'fire', 'smoke', 'time']
         measures = collectData()
-        print('temp= ' + str(measures[0]) + ' hum= ' + str(measures[1]) + ' fire = ' + str(
-            measures[2]) + ' smoke = ' + str(measures[3]))
-        for idx in range(4):
-            client.mqtt_publish(names[idx], str(measures[idx]), retain=True)
-        year, month, day, hour, minute, second, ms, dayinyear = utime.localtime()
-        client.mqtt_publish(names[4], str(year) + '.' + str(month) + '.' + str(day) + ' ' + str(hour) + ':' + str(
-            minute) + ':' + str(second), retain=True)
+        request = collectRequest(measures)
+        print(request)
+        send(request)
         gc.collect()
         utime.sleep(60)
 
 
 if __name__ == '__main__':
+    webrepl.start()
     while True:
         try:
             main()
         except Exception as err:
             print(err)
-            machine.reset()
+            utime.sleep(60 * 5)
