@@ -15,8 +15,9 @@ public class MicroClimateUpdateListener implements UpdatesListener {
     private Map<String, HomeCommand> commandMap;
     private Bot microClimateBot;
 
-    public MicroClimateUpdateListener(Map<String, HomeCommand> commandMap) {
+    public MicroClimateUpdateListener(Map<String, HomeCommand> commandMap, Bot microClimateBot) {
         this.commandMap = commandMap;
+        this.microClimateBot = microClimateBot;
     }
 
     @Override
