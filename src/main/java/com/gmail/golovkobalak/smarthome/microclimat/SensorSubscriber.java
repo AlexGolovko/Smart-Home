@@ -7,6 +7,7 @@ import com.gmail.golovkobalak.smarthome.microclimat.validator.AlarmMeasureValida
 import com.gmail.golovkobalak.smarthome.microclimat.validator.AlarmValidator;
 import com.gmail.golovkobalak.smarthome.telegram.bot.Bot;
 import com.google.gson.Gson;
+import com.pengrad.telegrambot.UpdatesListener;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -30,18 +31,20 @@ public class SensorSubscriber {
     private MeasureRepo measureRepo;
     @Value("${climatebot.chat}")
     private String chatId;
+    private UpdatesListener microClimateUpdateListener;
 
-    public SensorSubscriber(IMqttClient mqttClient, MqttConfiguration mqttConfiguration, Bot microClimateBot, AlarmMeasureValidator alarmMeasureValidator, MeasureRepo measureRepo) {
+    public SensorSubscriber(IMqttClient mqttClient, MqttConfiguration mqttConfiguration, Bot microClimateBot, AlarmMeasureValidator alarmMeasureValidator, MeasureRepo measureRepo, UpdatesListener microClimateUpdateListener) {
         this.mqttClient = mqttClient;
         this.mqttConfiguration = mqttConfiguration;
         this.microClimateBot = microClimateBot;
         this.alarmMeasureValidator = alarmMeasureValidator;
         this.measureRepo = measureRepo;
-
+        this.microClimateUpdateListener = microClimateUpdateListener;
     }
 
     public void run() {
         try {
+            microClimateBot.setUpdateListener(microClimateUpdateListener);
             runInternal();
         } catch (MqttException | InterruptedException e) {
             e.printStackTrace();
