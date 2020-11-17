@@ -7,6 +7,7 @@ import com.gmail.golovkobalak.smarthome.microclimat.validator.AlarmMeasureValida
 import com.gmail.golovkobalak.smarthome.microclimat.validator.AlarmValidator;
 import com.gmail.golovkobalak.smarthome.telegram.bot.Bot;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.pengrad.telegrambot.UpdatesListener;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttClient;
@@ -23,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class SensorSubscriber {
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
-    private static final Gson GSON = new Gson();
+    private static final Gson GSON = new GsonBuilder().setDateFormat("YYYY.MM.DD HH:MM:SS").create();
     private IMqttClient mqttClient;
     private MqttConfiguration mqttConfiguration;
     private Bot microClimateBot;
@@ -58,10 +59,7 @@ public class SensorSubscriber {
         }
         CountDownLatch receivedSignal = new CountDownLatch(10);
         mqttClient.subscribe(mqttConfiguration.sensorsTopic, (topic, msg) -> {
-
             final byte[] payload = msg.getPayload();
-            // ... payload handling omitted
-            //{"date":"2020.11.16 18:32:53", "temperatura":"26", "humidity":"42", "fire":"0", "smoke":"0"}
             final Measure measure = GSON.fromJson(new String(payload), Measure.class);
             executor.execute(() -> measureRepo.save(measure));
             log.info("Measure:" + measure.toString());

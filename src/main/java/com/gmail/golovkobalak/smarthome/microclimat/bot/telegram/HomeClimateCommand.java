@@ -16,7 +16,7 @@ public class HomeClimateCommand implements HomeCommand {
 
     @Override
     public String execute(Long chatId) {
-        final Measure measure = measureRepo.findFirstByDate();
+        final Measure measure = measureRepo.findFirstByDateOrderByDateDesc();
         return GSON.toJson(measure);
     }
 }
