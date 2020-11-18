@@ -14,7 +14,6 @@ import java.util.List;
 @Slf4j
 @Component
 public class UpdateCashListener implements UpdatesListener {
-    private MessageStrategy strategy;
     private final CashBot cashBot;
     private final CommandStrategy commandStrategy;
     private final CashMessageStrategy cashMessageStrategy;
@@ -30,13 +29,8 @@ public class UpdateCashListener implements UpdatesListener {
         {
             for (final Update update : updates) {
                 try {
-                    MessageStrategy strategy;
                     Long chatTelegramId = update.message().chat().id();
-                    if (update.message().text().startsWith("/")) {
-                        strategy = commandStrategy;
-                    } else {
-                        strategy = cashMessageStrategy;
-                    }
+                    MessageStrategy strategy = getMessageStrategy(update);
                     final String response = strategy.process(update);
                     cashBot.sendMessage(chatTelegramId.toString(), response);
                 } catch (Exception e) {
@@ -45,5 +39,15 @@ public class UpdateCashListener implements UpdatesListener {
             }
             return CONFIRMED_UPDATES_ALL;
         }
+    }
+
+    private MessageStrategy getMessageStrategy(Update update) {
+        MessageStrategy strategy;
+        if (update.message().text().startsWith("/")) {
+            strategy = commandStrategy;
+        } else {
+            strategy = cashMessageStrategy;
+        }
+        return strategy;
     }
 }

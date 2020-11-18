@@ -1,22 +1,26 @@
 package com.gmail.golovkobalak.smarthome.cashflow.strategy;
 
 import com.gmail.golovkobalak.smarthome.cashflow.command.CashBotCommand;
-import com.gmail.golovkobalak.smarthome.cashflow.repo.*;
+import com.gmail.golovkobalak.smarthome.cashflow.repo.CashFlowRepo;
+import com.gmail.golovkobalak.smarthome.cashflow.repo.CashStateRepo;
+import com.gmail.golovkobalak.smarthome.cashflow.repo.Chat;
+import com.gmail.golovkobalak.smarthome.cashflow.repo.ChatRepo;
 import com.pengrad.telegrambot.model.Update;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.Future;
 
+@Slf4j
 @Component
 public class CommandStrategy extends AbstractMessageStrategy {
-    //    private static final List<String> CLEAR_COMMANDS = Arrays.asList("/clear", "/clear@LouieHolovkoBot");
     private static final String UNSUPPORTED_COMMAND = "Unsupported yet\n" + "Available commands:\n" +
             "/clear - clean current spending state.\n" +
             "/lastmonth - show all spending for last 31 days.";
-    //    private static final List<String> LAST_MONTH_COMMANDS = Arrays.asList("/lastmonth", "/lastmonth@LouieHolovkoBot");
     private static final String EMPTY_STRING = "";
-    private Map<String, CashBotCommand> commands;
+    private final Map<String, CashBotCommand> commands;
 
     public CommandStrategy(ChatRepo chatRepo, CashStateRepo cashStateRepo, CashFlowRepo cashFlowRepo, Map<String, CashBotCommand> commands) {
         super(chatRepo, cashStateRepo, cashFlowRepo);
@@ -43,7 +47,7 @@ public class CommandStrategy extends AbstractMessageStrategy {
         try {
             return future.get();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.debug("CommandStrategy.class", e);
             return EMPTY_STRING;
         }
     }

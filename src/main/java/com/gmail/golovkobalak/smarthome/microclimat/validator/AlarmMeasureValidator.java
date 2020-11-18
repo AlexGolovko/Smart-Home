@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class AlarmMeasureValidator implements AlarmValidator<Measure> {
     public boolean validate(Measure measure) {
-        return true;
+        return !(measure.isFire() || measure.isSmoke() || measure.getHumidity() > 80 || measure.getTemperatura() > 50);
     }
 }

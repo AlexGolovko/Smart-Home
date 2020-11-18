@@ -3,12 +3,14 @@ package com.gmail.golovkobalak.smarthome.cashflow.strategy;
 import com.gmail.golovkobalak.smarthome.cashflow.repo.*;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Future;
 
+@Slf4j
 @Component
 public class CashMessageStrategy extends AbstractMessageStrategy {
 
@@ -41,7 +43,7 @@ public class CashMessageStrategy extends AbstractMessageStrategy {
         try {
             return future.get();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.debug("CashMessageStrategy.class", e);
             return "Are U sure that is the correct cash amount?";
         }
 

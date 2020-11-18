@@ -25,14 +25,14 @@ import java.util.concurrent.TimeUnit;
 public class SensorSubscriber {
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
     private static final Gson GSON = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm:ss").create();
-    private IMqttClient mqttClient;
-    private MqttConfiguration mqttConfiguration;
-    private Bot microClimateBot;
-    private AlarmValidator<Measure> alarmMeasureValidator;
-    private MeasureRepo measureRepo;
+    private final IMqttClient mqttClient;
+    private final MqttConfiguration mqttConfiguration;
+    private final Bot microClimateBot;
+    private final AlarmValidator<Measure> alarmMeasureValidator;
+    private final MeasureRepo measureRepo;
+    private final UpdatesListener microClimateUpdateListener;
     @Value("${climatebot.chat}")
     private String chatId;
-    private UpdatesListener microClimateUpdateListener;
 
     public SensorSubscriber(IMqttClient mqttClient, MqttConfiguration mqttConfiguration, Bot microClimateBot, AlarmMeasureValidator alarmMeasureValidator, MeasureRepo measureRepo, UpdatesListener microClimateUpdateListener) {
         this.mqttClient = mqttClient;
