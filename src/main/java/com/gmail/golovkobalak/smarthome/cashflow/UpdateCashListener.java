@@ -5,11 +5,13 @@ import com.gmail.golovkobalak.smarthome.cashflow.strategy.CommandStrategy;
 import com.gmail.golovkobalak.smarthome.cashflow.strategy.MessageStrategy;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Slf4j
 @Component
 public class UpdateCashListener implements UpdatesListener {
     private MessageStrategy strategy;
@@ -28,7 +30,7 @@ public class UpdateCashListener implements UpdatesListener {
         {
             for (final Update update : updates) {
                 try {
-                    final long startTime = System.currentTimeMillis();
+                    MessageStrategy strategy;
                     Long chatTelegramId = update.message().chat().id();
                     if (update.message().text().startsWith("/")) {
                         strategy = commandStrategy;
@@ -38,7 +40,7 @@ public class UpdateCashListener implements UpdatesListener {
                     final String response = strategy.process(update);
                     cashBot.sendMessage(chatTelegramId.toString(), response);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    log.debug("UpdateCashListener.process", e);
                 }
             }
             return CONFIRMED_UPDATES_ALL;

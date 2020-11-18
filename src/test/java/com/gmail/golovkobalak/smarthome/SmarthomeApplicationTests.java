@@ -9,7 +9,13 @@ import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.yaml.snakeyaml.Yaml;
 
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
@@ -30,8 +36,19 @@ class SmarthomeApplicationTests {
 
     @Test
     void gsonTest() {
-        final Gson gson = new GsonBuilder().setDateFormat("YYYY.MM.DD HH:MM:SS").create();
+        final Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm:ss").create();
         final Measure measure = gson.fromJson("{\"date\":\"2020.11.16 18:32:53\", \"temperatura\":\"26\", \"humidity\":\"42\", \"fire\":\"0\", \"smoke\":\"0\"}", Measure.class);
-        assertNotNull(measure);
+
+        measure.setDate(new Date());
+        measureRepo.save(measure);
+        measure.setDate(new Date());
+        measureRepo.save(measure);
+        final List<Measure> measures = measureRepo.findAll();
+        final Measure measureMax = measures.stream().max(Comparator.comparing(Measure::getDate)).get();
+        final Measure top = measureRepo.findTopByOrderByDateDesc();
+        assertEquals(measure, top);
+        System.out.println(measure);
+        System.out.println(top);
+        assertEquals(measureMax, top);
     }
 }

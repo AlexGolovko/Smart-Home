@@ -18,4 +18,11 @@ public class Measure {
     private boolean fire;
     private boolean smoke;
 
+    public String toYaml() {
+        return "measure: " +
+                "\n  temperature: " + temperatura +
+                "\n  humidity: " + humidity +
+                "\n  fire: " + fire +
+                "\n  smoke: " + smoke;
+    }
 }

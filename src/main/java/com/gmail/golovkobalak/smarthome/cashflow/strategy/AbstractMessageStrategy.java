@@ -15,7 +15,7 @@ public abstract class AbstractMessageStrategy implements MessageStrategy {
     public final CashStateRepo cashStateRepo;
     public final CashFlowRepo cashFlowRepo;
 
-    public AbstractMessageStrategy(ChatRepo chatRepo, CashStateRepo cashStateRepo, CashFlowRepo cashFlowRepo) {
+    protected AbstractMessageStrategy(ChatRepo chatRepo, CashStateRepo cashStateRepo, CashFlowRepo cashFlowRepo) {
         this.chatRepo = chatRepo;
         this.cashStateRepo = cashStateRepo;
         this.cashFlowRepo = cashFlowRepo;

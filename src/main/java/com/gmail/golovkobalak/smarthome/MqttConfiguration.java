@@ -5,8 +5,6 @@ import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +17,7 @@ import java.util.UUID;
 @PropertySource("classpath:mqtt.properties")
 public class MqttConfiguration {
     @Value("${mqtt.url}")
-    public String URL;
+    public String url;
     @Value("${mqtt.sensortopic}")
     public String sensorsTopic;
 
@@ -28,7 +26,7 @@ public class MqttConfiguration {
         String publisherId = UUID.randomUUID().toString();
         IMqttClient mqttClient = null;
         try {
-            mqttClient = new MqttClient(URL, publisherId);
+            mqttClient = new MqttClient(url, publisherId);
             MqttConnectOptions options = new MqttConnectOptions();
             options.setAutomaticReconnect(true);
             options.setCleanSession(true);
@@ -36,7 +34,7 @@ public class MqttConfiguration {
             mqttClient.connect(options);
             log.info("mqttClient connected");
         } catch (MqttException e) {
-            e.printStackTrace();
+            log.debug("mqttClient", e);
         }
         return mqttClient;
     }
