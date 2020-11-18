@@ -2,7 +2,7 @@ import utime
 import machine
 from machine import Pin, I2C
 import dht
-import cloud
+from ntptime import settime
 import gc
 import webrepl
 
@@ -77,11 +77,16 @@ def send(req):
     mqtt.publish('sensors/home/{}'.format(CLIENT_ID).encode(), str(req).encode())
     mqtt.disconnect()
 
+def setLocalTime():
+    settime()
+    rtc = machine.RTC()
+    utc_shift = 2
+    tm = utime.localtime(utime.mktime(utime.localtime()) + utc_shift * 3600)
+    tm = tm[0:3] + (0,) + tm[3:6] + (0,)
+    rtc.datetime(tm)
 
 def main():
-    # client = cloud.Cloud()
     while True:
-        # names = ['temperature', 'humidity', 'fire', 'smoke', 'time']
         measures = collectData()
         request = collectRequest(measures)
         print(request)
@@ -92,6 +97,7 @@ def main():
 
 if __name__ == '__main__':
     webrepl.start()
+    setLocalTime()
     while True:
         try:
             main()

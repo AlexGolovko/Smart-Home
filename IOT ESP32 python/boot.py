@@ -8,8 +8,6 @@ import network
 import machine
 import esp
 import gc
-from ntptime import settime
-import utime
 
 machine.freq(240000000)
 esp.osdebug(None)
@@ -27,15 +25,6 @@ def do_connect():
     print('network config:', wlan.ifconfig())
     print(uping.ping('google.com'))
 
-def setLocalTime():
-    settime()
-    rtc = machine.RTC()
-    utc_shift = 3
-    tm = utime.localtime(utime.mktime(utime.localtime()) + utc_shift * 3600)
-    tm = tm[0:3] + (0,) + tm[3:6] + (0,)
-    rtc.datetime(tm)
-
 do_connect()
-setLocalTime()
 gc.collect()
 print('wifi connected')
