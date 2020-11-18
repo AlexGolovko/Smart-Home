@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class SensorSubscriber {
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
-    private static final Gson GSON = new GsonBuilder().setDateFormat("YYYY.MM.DD HH:MM:SS").create();
+    private static final Gson GSON = new GsonBuilder().setDateFormat("yyyy.MM.dd HH:mm:ss").create();
     private IMqttClient mqttClient;
     private MqttConfiguration mqttConfiguration;
     private Bot microClimateBot;
@@ -62,7 +62,7 @@ public class SensorSubscriber {
             final byte[] payload = msg.getPayload();
             final Measure measure = GSON.fromJson(new String(payload), Measure.class);
             executor.execute(() -> measureRepo.save(measure));
-            log.info("Measure:" + measure.toString());
+            log.info(measure.toString());
             if (!alarmMeasureValidator.validate(measure)) {
                 microClimateBot.sendMessage(chatId, measure.toString());
             }
