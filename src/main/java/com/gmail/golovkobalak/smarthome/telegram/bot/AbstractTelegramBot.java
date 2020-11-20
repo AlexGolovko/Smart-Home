@@ -22,7 +22,7 @@ public class AbstractTelegramBot implements Bot {
 
     @Override
     public void setUpdateListener(UpdatesListener listener) {
-        bot.setUpdatesListener(listener, (response) -> {
+        bot.setUpdatesListener(listener, response -> {
             if (response != null) {
                 log.info("bad response: " + response.getMessage());
                 response.printStackTrace();
@@ -30,11 +30,9 @@ public class AbstractTelegramBot implements Bot {
             }
             log.info("RESPONSE IS NULL");
             try {
-                this.bot.removeGetUpdatesListener();
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
-                this.setUpdateListener(listener);
+                log.error(this.getClass().getCanonicalName(), e);
             }
         });
     }

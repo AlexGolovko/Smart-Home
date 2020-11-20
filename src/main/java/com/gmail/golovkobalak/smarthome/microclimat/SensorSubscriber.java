@@ -48,7 +48,7 @@ public class SensorSubscriber {
             microClimateBot.setUpdateListener(microClimateUpdateListener);
             runInternal();
         } catch (MqttException | InterruptedException e) {
-            e.printStackTrace();
+            log.error(this.getClass().getCanonicalName(), e);
         }
     }
 
@@ -68,6 +68,6 @@ public class SensorSubscriber {
             }
             receivedSignal.countDown();
         });
-        receivedSignal.await(1, TimeUnit.MINUTES);
+        receivedSignal.await(1, TimeUnit.MINUTES)
     }
 }

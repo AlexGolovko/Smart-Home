@@ -6,7 +6,10 @@ import com.pengrad.telegrambot.model.Chat;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
+import org.mockito.ArgumentMatchers;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Map;
@@ -35,7 +38,7 @@ class CommandStrategyTest {
 
 
     @Test
-    public void testClearCommand() {
+    void testClearCommand() {
         doReturn(message).when(update).message();
         doReturn(chat).when(message).chat();
         doReturn(1L).when(chat).id();
@@ -46,7 +49,7 @@ class CommandStrategyTest {
     }
 
     @Test
-    public void testMessCommand() {
+    void testMessCommand() {
         doReturn(message).when(update).message();
         doReturn(chat).when(message).chat();
         doReturn(1L).when(chat).id();

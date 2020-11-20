@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 @PropertySource("classpath:bot.properties")
 public class CashBot extends AbstractTelegramBot {
 
-    private com.pengrad.telegrambot.TelegramBot bot;
-
     public CashBot(@Value("${cashbot.token}") String token) {
         super(token);
     }

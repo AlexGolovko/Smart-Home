@@ -6,7 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-//{"date":"2020.11.16 18:32:53", "temperatura":"26", "humidity":"42", "fire":"0", "smoke":"0"}
 @Data
 @Document
 public class Measure {
