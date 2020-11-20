@@ -68,6 +68,6 @@ public class SensorSubscriber {
             }
             receivedSignal.countDown();
         });
-        receivedSignal.await(1, TimeUnit.MINUTES)
+        receivedSignal.await(1, TimeUnit.MINUTES);
     }
 }
