@@ -18,5 +18,6 @@ public class Runner {
     public void run() {
         cashFlowBot.run();
         sensorSubscriber.run();
+        //remote commit
     }
 }
